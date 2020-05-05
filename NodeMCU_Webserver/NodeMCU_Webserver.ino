@@ -2,12 +2,20 @@
 #include <ESP8266WebServer.h>
 #include "DHT.h"
 
+//Pin definitions
 #define DHT11_PIN D1
 
+//WiFi settings
 #define SSID "Haagdijk 43938C 2.4GHz"
 #define PASSWORD "vier rode fietsende olifanten"
 
+//Object creation
 DHT dht11(DHT11_PIN, DHT11);
+ESP8266WebServer server(80);
+
+//Attribute initialization
+float temperature;
+float humidity;
  
 void setup() {
   Serial.begin(115200);
@@ -28,6 +36,23 @@ void setup() {
   }
 
   Serial.println("WiFi Connected!");
+  Serial.print("IP: ");
+  Serial.print(WiFi.localIP());
+
+  server.on("/", handleOnConnect);
+  server.onNotFound(handleNotFound);
+
+  server.begin();
+  Serial.println("HTTP server started");
+}
+
+void handleOnConnect(){
+  
+}
+
+void handleNotFound(){
+
+  
 }
 
 
